@@ -3,11 +3,11 @@ import Vehicle from './Vehicle';
 
 export default class Car extends Vehicle {
   private doorsQty: number;
-  private searsQty: number;
+  private seatsQty: number;
 
   constructor(car: ICar) {
     super(car);
     this.doorsQty = car.doorsQty;
-    this.searsQty = car.seatsQty;
+    this.seatsQty = car.seatsQty;
   }
 }
