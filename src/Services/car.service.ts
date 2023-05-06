@@ -47,4 +47,12 @@ export default class CarService {
     if (!carFound) throw new Error(ERRO_NOT_FOUND);
     return this.createCarDomain(carFound);
   }
+
+  public async updateCarById(id: string, car: ICar) {
+    this.validateId(id);
+    const carORM = new CarORM();
+    const updateCar = await carORM.updateOne(id, car);
+    if (!updateCar) throw new Error(ERRO_NOT_FOUND);
+    return this.createCarDomain(updateCar);
+  } 
 }

@@ -22,6 +22,10 @@ abstract class AbstractODM<T> {
   public async findById(id: string) {
     return this.model.findById(id);
   }
+
+  public async updateOne(id: string, obj: object) {
+    return this.model.findByIdAndUpdate({ _id: id }, obj, { new: true });
+  }
 }
 
 export default AbstractODM;

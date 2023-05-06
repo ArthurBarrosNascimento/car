@@ -38,9 +38,24 @@ export default class CarController {
 
   public async findById() {
     try {
-      const { id } = this.req.params;
-      const carFound = await this.service.findById(id);
+      const { id: carId } = this.req.params;
+      const carFound = await this.service.findById(carId);
       return this.res.status(200).json(carFound);
+    } catch (error) {
+      const { message } = error as Error;
+      if (message === ERRO_INVALID_ID) {
+        return this.res.status(422).json({ message });
+      }
+      return this.res.status(404).json({ message });
+    }
+  }
+
+  public async updateCarById() {
+    try {
+      const { id: carId } = this.req.params;
+      const carInfo = this.req.body;
+      const carUpdated = await this.service.updateCarById(carId, carInfo);
+      return this.res.status(200).json(carUpdated);
     } catch (error) {
       const { message } = error as Error;
       if (message === ERRO_INVALID_ID) {
