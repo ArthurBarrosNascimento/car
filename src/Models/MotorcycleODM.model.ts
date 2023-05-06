@@ -1,18 +1,18 @@
 import { Schema } from 'mongoose';
 import AbstractODM from './AbstractODM';
-import ICar from '../Interfaces/ICar';
+import IMotorcycle from '../Interfaces/IMotorcycle';
 
-export default class CarORM extends AbstractODM<ICar> {
+export default class MotorcycleORM extends AbstractODM<IMotorcycle> {
   constructor() {
-    const CarSchema = new Schema<ICar>({
+    const Motorcycle = new Schema<IMotorcycle>({
       model: { type: 'String', required: true },
       year: { type: 'Number', required: true },
       color: { type: 'String', required: true },
       status: { type: 'boolean', default: false },
       buyValue: { type: 'Number', required: true },
-      doorsQty: { type: 'Number', required: true },
-      seatsQty: { type: 'Number', required: true },
+      category: { type: 'String', required: true },
+      engineCapacity: { type: 'Number', required: true },
     });
-    super(CarSchema, 'cars');
+    super(Motorcycle, 'motorcycles');
   }
 }
