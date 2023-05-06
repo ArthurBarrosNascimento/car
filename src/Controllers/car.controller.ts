@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import ICar from '../Interfaces/ICar';
 import CarService from '../Services/car.service';
 
+const ERRO_INVALID_ID = 'Invalid mongo id';
+
 export default class CarController {
   private req: Request;
   private res: Response;
@@ -22,6 +24,29 @@ export default class CarController {
       return this.res.status(201).json(newCar);
     } catch (error) {
       return this.res.status(400).json('invalid fields');
+    }
+  }
+
+  public async findAll() {
+    try {
+      const allCars = await this.service.findAll();
+      return this.res.status(200).json(allCars);
+    } catch (error) {
+      return this.res.status(500).json('erro banco');
+    }
+  }
+
+  public async findById() {
+    try {
+      const { id } = this.req.params;
+      const carFound = await this.service.findById(id);
+      return this.res.status(200).json(carFound);
+    } catch (error) {
+      const { message } = error as Error;
+      if (message === ERRO_INVALID_ID) {
+        return this.res.status(422).json({ message });
+      }
+      return this.res.status(404).json({ message });
     }
   }
 }
